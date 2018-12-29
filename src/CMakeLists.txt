@@ -40,6 +40,20 @@ include_directories(${TEMP_DIR})
 add_executable(temp_main ${TEMP_DIR}/main.cpp)
 target_link_libraries(temp_main ${VTK_LIBRARIES})
 
+add_executable(temp_vtk_02 ${TEMP_DIR}/Study_VTK_Together02.cpp)
+target_link_libraries(temp_vtk_02 ${VTK_LIBRARIES})
+
+#===========================================================================
+# vtk_dev_book_cn
+#===========================================================================
+
+set(VTKDEVBOOKCN_DIR ./vtk_dev_book_cn)
+include_directories(${VTKDEVBOOKCN_DIR})
+
+# ch01
+add_executable(bc_ch01 ${VTKDEVBOOKCN_DIR}/ch01/1.3_TestVTKInstall.cpp)
+target_link_libraries(bc_ch01 ${VTK_LIBRARIES})
+
 #===========================================================================
 # examples
 #===========================================================================
@@ -51,3 +65,34 @@ include_directories(${EXAMPLES_DIR})
 add_executable(eg_rendering_cylinder ${EXAMPLES_DIR}/rendering/Cylinder.cpp)
 target_link_libraries(eg_rendering_cylinder ${VTK_LIBRARIES})
 
+#===========================================================================
+# VTKExamples
+#===========================================================================
+
+set(VTK_EXAMPLES_DIR ./VTKExamples)
+include_directories(${VTK_EXAMPLES_DIR})
+
+# eg_rendering_cylinder
+add_executable(ve_interaction_ImageRegion ${VTK_EXAMPLES_DIR}/Interaction/ImageRegion.cpp)
+target_link_libraries(ve_interaction_ImageRegion ${VTK_LIBRARIES})
+
+# eg_rendering_cylinder
+add_executable(ve_interaction_WorldPointPicker ${VTK_EXAMPLES_DIR}/Interaction/WorldPointPicker.cpp)
+target_link_libraries(ve_interaction_WorldPointPicker ${VTK_LIBRARIES})
+
+add_executable(ve_interaction_MouseEvents ${VTK_EXAMPLES_DIR}/Interaction/MouseEvents.cpp)
+target_link_libraries(ve_interaction_MouseEvents ${VTK_LIBRARIES})
+
+#----------------------------------------------------------------------------------
+
+# eg_rendering_cylinder
+add_executable(ve_visualization_MoveActor ${VTK_EXAMPLES_DIR}/Visualization/MoveActor.cpp)
+target_link_libraries(ve_visualization_MoveActor ${VTK_LIBRARIES})
+
+add_executable(ve_visualization_MoveCamera ${VTK_EXAMPLES_DIR}/Visualization/MoveCamera.cpp)
+target_link_libraries(ve_visualization_MoveCamera ${VTK_LIBRARIES})
+
+#--------------------------------------------------------------------------------------
+
+add_executable(ve_utilities_Coordinate ${VTK_EXAMPLES_DIR}/Utilities/Coordinate.cpp)
+target_link_libraries(ve_utilities_Coordinate ${VTK_LIBRARIES})
