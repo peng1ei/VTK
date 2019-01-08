@@ -51,7 +51,7 @@ int main() {
 
     /////////////////////////////////////////////////////////////
     // begin linux.jpg
-    std::string filename_linux("/home/penglei/图片/jpg/linux.jpg");
+    std::string filename_linux("/home/penglei/图片/jpg/niu.jpg");
     vtkImageReader2 *imageReader = readerFactory->CreateImageReader2(filename_linux.c_str());
     imageReader->SetFileName(filename_linux.c_str());
     imageReader->UpdateInformation();
@@ -74,16 +74,14 @@ int main() {
     // In parallel mode, decrease the parallel scale by the specified factor.
     // A value greater than 1 is a zoom-in, a value less than 1 is a zoom-out.
     //renderer->GetActiveCamera()->Zoom(0.5);
-    renderer->GetActiveCamera()->SetPosition(380, 214, renderer->GetActiveCamera()->GetDistance());
-    renderer->GetActiveCamera()->SetFocalPoint(380, 214, 0);
+    renderer->GetActiveCamera()->SetPosition(110, 73.5, camera->GetDistance());
+    renderer->GetActiveCamera()->SetFocalPoint(110, 73.5, 0);
     //renderer->GetActiveCamera()->ComputeViewPlaneNormal();
 
     // Distance 必须在 近平面和远平面之间 [zNear, zFar]
     // 对于平行投影，Distance只要在范围之内，多少都不影响投影效果
     //renderer->GetActiveCamera()->SetDistance(20);
-
-    // 设置为 显示窗口 高度的一半，这样就可以按 1:1 显示原影像
-    renderer->GetActiveCamera()->SetParallelScale(214); // width*1.2
+    renderer->GetActiveCamera()->SetParallelScale(110);
     //renderer->GetActiveCamera()->Zoom(0.01);
 
     //renderer->GetActiveCamera()->Print(std::cout);
@@ -117,7 +115,7 @@ int main() {
 
     renderWindow->SetPosition(renderWindow->GetScreenSize()[0]/2 - 300,
                               renderWindow->GetScreenSize()[1]/2 - 200);
-    renderWindow->SetSize(760, 428);
+    renderWindow->SetSize(800, 533);
     renderWindowInteractor->SetInteractorStyle(style);
 
     renderer->GetActiveCamera()->Print(std::cout);
@@ -127,10 +125,7 @@ int main() {
     renderWindowInteractor->SetRenderWindow(renderWindow);
     renderWindowInteractor->Initialize();
 
-
-
     renderWindowInteractor->Start();
-    style->Print(std::cout);
 
     /////////////////////////////////////////////////////////////
     //              资源释放
