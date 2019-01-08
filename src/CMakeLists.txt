@@ -96,3 +96,12 @@ target_link_libraries(ve_visualization_MoveCamera ${VTK_LIBRARIES})
 
 add_executable(ve_utilities_Coordinate ${VTK_EXAMPLES_DIR}/Utilities/Coordinate.cpp)
 target_link_libraries(ve_utilities_Coordinate ${VTK_LIBRARIES})
+
+#######################################################################################
+# begin ImageShow----------------------------------------------------------------------
+
+# Test_001
+add_executable(ve_imageshow_Test_001 ${VTK_EXAMPLES_DIR}/ImageShow/Test_001.cpp)
+target_link_libraries(ve_imageshow_Test_001 ${VTK_LIBRARIES})
+
+# end ImageShow----------------------------------------------------------------------
