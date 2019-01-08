@@ -20,6 +20,11 @@
 #include <vtkLightCollection.h>
 #include <vtkLight.h>
 
+#include <vtkOutlineFilter.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
+#include <vtkProperty.h>
+
 #include "ImageShowCore.h"
 
 int main() {
@@ -36,7 +41,7 @@ int main() {
 
     // 关闭所有的灯光，对于 2D 图形系统来说不必要
     // 或者直接移除
-    renderer->RemoveAllLights();
+    //renderer->RemoveAllLights();
 //    auto lights = renderer->GetLights();
 //    while (auto light = lights->GetNextItem()) {
 //        light->SwitchOff();
@@ -79,10 +84,10 @@ int main() {
 
     //----------------------------------------------------------
     // begin linux actor
-    std::string filenameLinux("/home/penglei/图片/jpg/cmu213.png");
+    std::string filenameLinux("/home/penglei/图片/jpg/cmu213.png"); // cmu213.png
     vtkImageReader2 *imageReader = readerFactory->CreateImageReader2(filenameLinux.c_str());
     imageReader->SetFileName(filenameLinux.c_str());
-    //imageReader->UpdateInformation();
+    //imageReader->UpdateInformation(); // 对于 vtkGDAL 可能适用
     imageReader->Update();
 
 
@@ -119,14 +124,41 @@ int main() {
     camera->SetFocalPoint(xc, yc, g_kCameraFocalPointZ);
     camera->SetPosition(xc, yc, g_kCameraPositionPointZ);
 
-    renderer->AddActor(actorLinux);
 
-    //actor_linux->Print(std::cout);
+    // Create the outline 创建影像的外边框
+    vtkSmartPointer<vtkOutlineFilter> outline =
+            vtkSmartPointer<vtkOutlineFilter>::New();
+    outline->SetInputConnection(imageReader->GetOutputPort());
+
+    vtkSmartPointer<vtkPolyDataMapper> outlineMapper =
+            vtkSmartPointer<vtkPolyDataMapper>::New();
+    outlineMapper->SetInputConnection(outline->GetOutputPort());
+
+    // 默认情况下，Mapper输入的标量数据会对Actor进行着色，
+    // 而Actor的颜色设置会被忽略。如果要忽略这些标量数据，
+    // 可以使用方法 ScalarVisibilityOff()
+    outlineMapper->ScalarVisibilityOff();
+
+    vtkSmartPointer<vtkActor> outlineActor =
+            vtkSmartPointer<vtkActor>::New();
+    outlineActor->SetMapper(outlineMapper);
+    outlineActor->GetProperty()->SetColor(0, 1, 1);
+    outlineActor->GetProperty()->SetLineWidth(1.25);
+    //outlineActor->GetProperty()->SetOpacity(1.0); // 设置不透明度, 0 - 完全透明, 1 - 完全不透明
+
+
+
+    // 重点！！！ 注意 outline actor 的添加顺序
+    // image actor 应该先加入渲染，然后 outline actor 再加入渲染
+    renderer->AddActor(actorLinux);
+    // outline actor 应该在影像后面添加，不然可能会出现边框颜色变浅
+    renderer->AddActor(outlineActor);
+
     // end linux actor
     //----------------------------------------------------------
 
     //----------------------------------------------------------
-
+    //
 
 
 
