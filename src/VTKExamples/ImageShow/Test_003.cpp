@@ -187,7 +187,7 @@ int main() {
 
     //----------------------------------------------------------
     // begin linux actor
-    std::string filenameLinux("/home/penglei/图片/jpg/earth.jpg"); // cmu213.png
+    std::string filenameLinux("/home/penglei/图片/jpg/linux.jpg"); // cmu213.png
     vtkImageReader2 *imageReader = readerFactory->CreateImageReader2(filenameLinux.c_str());
     imageReader->SetFileName(filenameLinux.c_str());
     //imageReader->UpdateInformation(); // 对于 vtkGDAL 可能适用
@@ -223,7 +223,17 @@ int main() {
     double yc = origin[1] + 0.5*(extent[2] + extent[3])*spacing[1];
 
     auto camera = renderer->GetActiveCamera();
-    camera->SetParallelScale(0.5 * (g_kWindowHeight-1)); // 设置为窗体的一半时，为 1:1 显示？？？
+
+    // 1:1 显示影像
+    // 高度必须减去 1，否则未完全吻合
+    camera->SetParallelScale(0.5 * (g_kWindowHeight-1));
+
+    // 以下三句代码用于使影像适应于图像的宽高，填充窗口
+    // 类似于 ENVI 中的 Zoom To Full Extent
+    // float xd = (extent[1] - extent[0] + 1)*spacing[0]; // not used
+    // float yd = (extent[3] - extent[2] + 1)*spacing[1];
+    // camera->SetParallelScale(0.5*yd);
+
     camera->SetFocalPoint(xc, yc, g_kCameraFocalPointZ);
     camera->SetPosition(xc, yc, g_kCameraPositionPointZ);
 
@@ -255,7 +265,7 @@ int main() {
     // image actor 应该先加入渲染，然后 outline actor 再加入渲染
     renderer->AddActor(actorLinux);
     // outline actor 应该在影像后面添加，不然可能会出现边框颜色变浅
-    renderer->AddActor(outlineActor);
+    //renderer->AddActor(outlineActor);
 
     // end linux actor
     //----------------------------------------------------------

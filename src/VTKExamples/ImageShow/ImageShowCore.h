@@ -5,8 +5,8 @@
 #ifndef VTK_STUDY_IMAGESHOWCORE_H
 #define VTK_STUDY_IMAGESHOWCORE_H
 
-const int g_kWindowWidth = 800;
-const int g_kWindowHeight = 450;
+const int g_kWindowWidth = 760;//800;
+const int g_kWindowHeight = 428;//450;
 
 const double g_kCameraFocalPointZ = 0.0;
 
