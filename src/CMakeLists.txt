@@ -104,8 +104,12 @@ target_link_libraries(ve_utilities_Coordinate ${VTK_LIBRARIES})
 add_executable(ve_imageshow_Test_001 ${VTK_EXAMPLES_DIR}/ImageShow/Test_001.cpp)
 target_link_libraries(ve_imageshow_Test_001 ${VTK_LIBRARIES})
 
-# Test_002
+# Test_002 影像边框
 add_executable(ve_imageshow_Test_002 ${VTK_EXAMPLES_DIR}/ImageShow/Test_002.cpp)
 target_link_libraries(ve_imageshow_Test_002 ${VTK_LIBRARIES})
+
+# Test_003
+add_executable(ve_imageshow_Test_003 ${VTK_EXAMPLES_DIR}/ImageShow/Test_003.cpp)
+target_link_libraries(ve_imageshow_Test_003 ${VTK_LIBRARIES})
 
 # end ImageShow----------------------------------------------------------------------

@@ -1,6 +1,7 @@
 //
 // Created by penglei on 19-1-8.
 //
+// 完成影像边框
 
 #include <vtkSmartPointer.h>
 #include <vtkImageReader2Factory.h>
@@ -142,8 +143,8 @@ int main() {
     vtkSmartPointer<vtkActor> outlineActor =
             vtkSmartPointer<vtkActor>::New();
     outlineActor->SetMapper(outlineMapper);
-    outlineActor->GetProperty()->SetColor(0, 1, 1);
-    outlineActor->GetProperty()->SetLineWidth(1.25);
+    outlineActor->GetProperty()->SetColor(0.0, g_kOutlineColor, g_kOutlineColor);
+    outlineActor->GetProperty()->SetLineWidth(1.0);
     //outlineActor->GetProperty()->SetOpacity(1.0); // 设置不透明度, 0 - 完全透明, 1 - 完全不透明
 
 

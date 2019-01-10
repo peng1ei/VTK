@@ -11,7 +11,7 @@
 #include <vtkImageActor.h>
 #include <vtkNamedColors.h>
 #include <vtkCamera.h>
-#include "vtkObjectFactory.h"
+#include <vtkObjectFactory.h>
 #include <vtkImageProperty.h>
 
 class customMouseInteractorStyle : public vtkInteractorStyleTrackballCamera
