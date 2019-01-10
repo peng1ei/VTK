@@ -57,105 +57,11 @@ public:
     // 鼠标滚轮放大
     void OnMouseWheelForward() override {
         Zoom(HtkZoomType::ZoomIn);
-
-//        int* mouseDisplayPoint = this->Interactor->GetEventPosition();
-//        this->FindPokedRenderer(mouseDisplayPoint[0], mouseDisplayPoint[1]);
-//        if (this->CurrentRenderer == nullptr) {
-//            return;
-//        }
-//
-//        // 计算鼠标位置在世界坐标系中的坐标值
-//        double mouseWorldPoint[3];
-//        this->CurrentRenderer->SetDisplayPoint(mouseDisplayPoint[0], mouseDisplayPoint[1], 0);
-//        this->CurrentRenderer->DisplayToWorld();
-//        this->CurrentRenderer->GetWorldPoint(mouseWorldPoint);
-//
-//        // 获取缩放前 camera 在世界坐标系中的位置
-//        // camera 的位置始终位于显示窗体的中心
-//        double oldCameraWorldPoint[3];
-//        oldCameraWorldPoint[0] = this->CurrentRenderer->GetActiveCamera()->GetPosition()[0];
-//        oldCameraWorldPoint[1] = this->CurrentRenderer->GetActiveCamera()->GetPosition()[1];
-//        oldCameraWorldPoint[2] = this->CurrentRenderer->GetActiveCamera()->GetPosition()[2];
-//
-//        // 计算鼠标位置和 camera 位置(显示窗体的中心)的差值(delta)
-//        double deltaX = +(mouseWorldPoint[0] - oldCameraWorldPoint[0])*(this->htkZoomFactor - 1.0);
-//        double deltaY = +(mouseWorldPoint[1] - oldCameraWorldPoint[1])*(this->htkZoomFactor - 1.0);
-//
-//
-//        ///////////////////////////////////////////////////////////////////////
-//        // 1. 先将 camera 平移到世界坐标系原点
-//        vtkSmartPointer<vtkTransform> transformToWorldOrigin =
-//                vtkSmartPointer<vtkTransform>::New();
-//
-//        transformToWorldOrigin->Translate(-oldCameraWorldPoint[0], -oldCameraWorldPoint[1], 0);
-//        this->CurrentRenderer->GetActiveCamera()->ApplyTransform(transformToWorldOrigin);
-//
-//        // 2. 设置 camera 的缩放倍数
-//        this->CurrentRenderer->GetActiveCamera()->SetParallelScale(
-//                this->CurrentRenderer->GetActiveCamera()->GetParallelScale()/this->htkZoomFactor);
-//
-//        // 3. 将 camera 平移回缩放中心，这一步是关键之处
-//        vtkSmartPointer<vtkTransform> transformToZoomCenter =
-//                vtkSmartPointer<vtkTransform>::New();
-//
-//        transformToZoomCenter->Translate(oldCameraWorldPoint[0]+deltaX, oldCameraWorldPoint[1]+deltaY, 0);
-//        this->CurrentRenderer->GetActiveCamera()->ApplyTransform(transformToZoomCenter);
-//
-//        // 4. 以上三步设置好了 camera 的缩放变换矩阵，下一步就是启动渲染
-//        this->Interactor->Render();
-        ///////////////////////////////////////////////////////////////////////
     }
 
     // 鼠标滚轮缩小
     void OnMouseWheelBackward() override {
         Zoom(HtkZoomType::ZoomOut);
-
-//        int* mouseDisplayPoint = this->Interactor->GetEventPosition();
-//        this->FindPokedRenderer(mouseDisplayPoint[0], mouseDisplayPoint[1]);
-//        if (this->CurrentRenderer == nullptr) {
-//            return;
-//        }
-//
-//        // 计算鼠标位置在世界坐标系中的坐标值
-//        double mouseWorldPoint[3];
-//        this->CurrentRenderer->SetDisplayPoint(mouseDisplayPoint[0], mouseDisplayPoint[1], 0);
-//        this->CurrentRenderer->DisplayToWorld();
-//        this->CurrentRenderer->GetWorldPoint(mouseWorldPoint);
-//
-//        // 获取缩放前 camera 在世界坐标系中的位置
-//        // camera 的位置始终位于显示窗体的中心
-//        double oldCameraWorldPoint[3];
-//        oldCameraWorldPoint[0] = this->CurrentRenderer->GetActiveCamera()->GetPosition()[0];
-//        oldCameraWorldPoint[1] = this->CurrentRenderer->GetActiveCamera()->GetPosition()[1];
-//        oldCameraWorldPoint[2] = this->CurrentRenderer->GetActiveCamera()->GetPosition()[2];
-//
-//        // 计算鼠标位置和 camera 位置(显示窗体的中心)的差值(delta)
-//        double deltaX = -(mouseWorldPoint[0] - oldCameraWorldPoint[0])*(this->htkZoomFactor - 1.0);
-//        double deltaY = -(mouseWorldPoint[1] - oldCameraWorldPoint[1])*(this->htkZoomFactor - 1.0);
-//
-//
-//        ///////////////////////////////////////////////////////////////////////
-//        // 1. 先将 camera 平移到世界坐标系原点
-//        vtkSmartPointer<vtkTransform> transformToWorldOrigin =
-//                vtkSmartPointer<vtkTransform>::New();
-//
-//        transformToWorldOrigin->Translate(-oldCameraWorldPoint[0], -oldCameraWorldPoint[1], 0);
-//        this->CurrentRenderer->GetActiveCamera()->ApplyTransform(transformToWorldOrigin);
-//
-//        // 2. 设置 camera 的缩放倍数
-//        this->CurrentRenderer->GetActiveCamera()->SetParallelScale(
-//                this->CurrentRenderer->GetActiveCamera()->GetParallelScale()*this->htkZoomFactor);
-//
-//        // 3. 将 camera 平移回缩放中心，这一步是关键之处
-//        vtkSmartPointer<vtkTransform> transformToZoomCenter =
-//                vtkSmartPointer<vtkTransform>::New();
-//
-//        transformToZoomCenter->Translate(oldCameraWorldPoint[0]+deltaX, oldCameraWorldPoint[1]+deltaY, 0);
-//        this->CurrentRenderer->GetActiveCamera()->ApplyTransform(transformToZoomCenter);
-//
-//        // 4. 以上三步设置好了 camera 的缩放变换矩阵，下一步就是启动渲染
-//        this->Interactor->Render();
-        ///////////////////////////////////////////////////////////////////////
     }
 
     void Zoom(HtkZoomType zoomType) {
@@ -194,7 +100,7 @@ public:
         transformToWorldOrigin->Translate(-oldCameraWorldPoint[0], -oldCameraWorldPoint[1], 0);
         this->CurrentRenderer->GetActiveCamera()->ApplyTransform(transformToWorldOrigin);
 
-        // 2. 设置 camera 的缩放倍数
+        // 2. 设置 camera 的缩放倍数，前提是 camera 已经开启平行投影
         if (zoomType == HtkZoomType::ZoomIn) {
             this->CurrentRenderer->GetActiveCamera()->SetParallelScale(
                     this->CurrentRenderer->GetActiveCamera()->GetParallelScale()/this->htkZoomFactor);
@@ -218,7 +124,7 @@ protected:
     customMouseInteractorStyle() {
         this->htkZoomFactor = 1.21;
     }
-    ~customMouseInteractorStyle() override {}
+    ~customMouseInteractorStyle() = default;
 
     double htkZoomFactor; // 缩放系数, 默认为 1.21
 
